@@ -1,0 +1,53 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct employee
+{
+	int id;
+	char name[100];
+};
+int add(FILE *file)
+{
+	struct employee emp;
+	printf("enter the id:");
+	scanf("%d",&emp.id);
+	printf("enter name:");
+	scanf("%s",emp.name);
+	fseek(file,0,SEEK_SET);
+	fwrite(&emp,sizeof(struct employee),1,file);
+	printf("suceess\n");
+	
+	}
+void dis(FILE *file)
+{
+	struct employee emp;
+	rewind(file);
+	while( fread(&emp,sizeof(struct employee),1,file)!= NULL)
+	{
+		printf("\n%d-->%s",emp.id,emp.name);
+	}
+}
+int main()
+{
+	FILE *file;
+	file=fopen("C:/Users/SRUTHI M/Downloads/shiva.txt","rb+");
+	int i,c=0;
+	while(c!=3)
+	{
+		printf("\n enter choice:");
+		scanf("%d",&c);
+		switch(c)
+		{
+			case 1:
+				add(file);
+				break;
+			case 2:
+				dis(file);
+				break;
+			case 3:
+				printf("closed...");
+				fclose(file);
+		}
+		
+
+	}
+}
